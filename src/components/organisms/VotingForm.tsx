@@ -28,7 +28,7 @@ export default function VotingForm() {
 
   const handleFieldChange = (field: string, value: string) => {
     dispatch(setFormValue({ 
-      field: field as keyof typeof name, 
+      field: field as 'name' | 'email' | 'language' | 'reason', 
       value 
     }));
     
