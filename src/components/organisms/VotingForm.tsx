@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {
   setFormValue,
@@ -25,6 +25,19 @@ export default function VotingForm() {
     useAppSelector((state) => state.form);
   
   const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
+  const [isReturningUser, setIsReturningUser] = useState(false);
+
+  // Check for returning user and populate form
+  useEffect(() => {
+    const userSubmission = localStorageUtil.getUserSubmission();
+    if (userSubmission) {
+      setIsReturningUser(true);
+      dispatch(setFormValue({ field: 'name', value: userSubmission.name }));
+      dispatch(setFormValue({ field: 'email', value: userSubmission.email }));
+      dispatch(setFormValue({ field: 'language', value: userSubmission.language }));
+      dispatch(setFormValue({ field: 'reason', value: userSubmission.reason }));
+    }
+  }, [dispatch]);
 
   const handleFieldChange = (field: string, value: string) => {
     dispatch(setFormValue({ 
@@ -55,8 +68,8 @@ export default function VotingForm() {
       
       dispatch(submitVoteSuccess(response.message));
       
-      // Store user's email in localStorage
-      localStorageUtil.setUserEmail(email);
+      // Store user's complete submission in localStorage
+      localStorageUtil.setUserSubmission({ name, email, language, reason });
       
       // Fetch updated results immediately
       dispatch(fetchResultsAfterSubmission());
@@ -71,10 +84,17 @@ export default function VotingForm() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-      <h2 className="text-xl font-semibold text-gray-900 mb-6">
-        Vote for Your Favorite Programming Language
-      </h2>
+    <section className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 sm:mb-8">
+      <div className="mb-4 sm:mb-6">
+        <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
+          {isReturningUser ? 'Update Your Vote' : 'Vote for Your Favorite Programming Language'}
+        </h2>
+        {isReturningUser && (
+          <p className="text-sm text-blue-600 bg-blue-50 p-3 rounded-md">
+            Welcome back! We've loaded your previous submission. You can update your vote below.
+          </p>
+        )}
+      </div>
 
       {/* Success/Error Messages */}
       {successMessage && (
@@ -97,7 +117,7 @@ export default function VotingForm() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6" noValidate>
         <FormField
           id="name"
           name="name"
@@ -151,23 +171,24 @@ export default function VotingForm() {
           error={getFieldError(validationErrors, 'reason')}
         />
 
-        <div className="flex justify-end">
+        <div className="flex justify-end pt-2">
           <Button
             type="submit"
             disabled={isLoading}
-            className="min-w-[120px]"
+            className="w-full sm:w-auto sm:min-w-[120px]"
+            aria-describedby={error ? "form-error" : undefined}
           >
             {isLoading ? (
               <div className="flex items-center justify-center">
                 <LoadingSpinner size="sm" className="mr-2" />
-                Submitting...
+                <span>Submitting...</span>
               </div>
             ) : (
-              'Submit Vote'
+              isReturningUser ? 'Update Vote' : 'Submit Vote'
             )}
           </Button>
         </div>
       </form>
-    </div>
+    </section>
   );
 }

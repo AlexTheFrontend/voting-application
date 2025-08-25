@@ -36,8 +36,9 @@ describe('LanguageStatistics', () => {
       </Provider>
     );
 
-    expect(screen.getByText('Voting Statistics')).toBeInTheDocument();
-    expect(screen.getByRole('status')).toBeInTheDocument();
+    // Should show skeleton loader with aria-label
+    expect(screen.getByLabelText('Loading statistics')).toBeInTheDocument();
+    expect(screen.getAllByRole('status').length).toBeGreaterThan(0); // Skeleton components have status role
   });
 
   it('should show error state', () => {

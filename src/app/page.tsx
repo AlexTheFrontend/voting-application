@@ -1,12 +1,16 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { useAppDispatch } from '@/store/hooks';
 import { fetchResults } from '@/store/thunks/resultsThunks';
 import Layout from '@/components/templates/Layout';
 import VotingForm from '@/components/organisms/VotingForm';
-import LanguageStatistics from '@/components/organisms/LanguageStatistics';
-import ResponsesTable from '@/components/organisms/ResponsesTable';
+import StatisticsSkeleton from '@/components/molecules/StatisticsSkeleton';
+import TableSkeleton from '@/components/molecules/TableSkeleton';
+
+// Lazy load results components for better performance
+const LanguageStatistics = lazy(() => import('@/components/organisms/LanguageStatistics'));
+const ResponsesTable = lazy(() => import('@/components/organisms/ResponsesTable'));
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -18,15 +22,19 @@ export default function Home() {
 
   return (
     <Layout>
-      <div className="space-y-8">
+      <div className="space-y-6 sm:space-y-8">
         {/* Voting Form */}
         <VotingForm />
 
         {/* Language Statistics */}
-        <LanguageStatistics />
+        <Suspense fallback={<StatisticsSkeleton />}>
+          <LanguageStatistics />
+        </Suspense>
 
         {/* All Submissions Table */}
-        <ResponsesTable />
+        <Suspense fallback={<TableSkeleton />}>
+          <ResponsesTable />
+        </Suspense>
       </div>
     </Layout>
   );

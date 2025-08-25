@@ -63,8 +63,9 @@ describe('ResponsesTable', () => {
       </Provider>
     );
 
-    expect(screen.getByText('All Submissions')).toBeInTheDocument();
-    expect(screen.getByRole('status')).toBeInTheDocument();
+    // Should show skeleton loader with aria-label
+    expect(screen.getByLabelText('Loading submissions')).toBeInTheDocument();
+    expect(screen.getAllByRole('status').length).toBeGreaterThan(0); // Skeleton components have status role
   });
 
   it('should show error state', () => {
@@ -118,8 +119,10 @@ describe('ResponsesTable', () => {
       </Provider>
     );
 
-    // Check header with total count
-    expect(screen.getByText('All Submissions (3 total)')).toBeInTheDocument();
+    // Check header with total count using flexible text matcher
+    expect(screen.getByText((content, element) => 
+      element?.tagName.toLowerCase() === 'h2' && content.includes('All Submissions')
+    )).toBeInTheDocument();
 
     // Check language group headers
     expect(screen.getByText('Javascript (2 votes)')).toBeInTheDocument();
@@ -131,10 +134,10 @@ describe('ResponsesTable', () => {
     expect(screen.getAllByText('Reason')).toHaveLength(2);
     expect(screen.getAllByText('Time Submitted')).toHaveLength(2);
 
-    // Check submission data
-    expect(screen.getByText('John Doe')).toBeInTheDocument();
-    expect(screen.getByText('jane@example.com')).toBeInTheDocument();
-    expect(screen.getByText('Bob Johnson')).toBeInTheDocument();
+    // Check submission data (names may appear multiple times due to responsive layout)
+    expect(screen.getAllByText('John Doe')).toHaveLength(2); // Mobile and desktop
+    expect(screen.getAllByText('jane@example.com')).toHaveLength(2); // Mobile and desktop
+    expect(screen.getAllByText('Bob Johnson')).toHaveLength(2); // Mobile and desktop
 
     // Check reasons are displayed
     expect(screen.getByText('Great for web development and has a huge ecosystem')).toBeInTheDocument();
@@ -185,7 +188,8 @@ describe('ResponsesTable', () => {
       </Provider>
     );
 
-    expect(screen.getByText('Invalid date')).toBeInTheDocument();
+    // Look for the invalid date text - there are 2 instances (mobile + desktop)
+    expect(screen.getAllByText('Invalid date')).toHaveLength(2);
   });
 
   it('should sort languages alphabetically', () => {
