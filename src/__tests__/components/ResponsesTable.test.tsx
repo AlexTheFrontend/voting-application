@@ -139,9 +139,9 @@ describe('ResponsesTable', () => {
     expect(screen.getAllByText('jane@example.com')).toHaveLength(2); // Mobile and desktop
     expect(screen.getAllByText('Bob Johnson')).toHaveLength(2); // Mobile and desktop
 
-    // Check reasons are displayed
-    expect(screen.getByText('Great for web development and has a huge ecosystem')).toBeInTheDocument();
-    expect(screen.getByText('Excellent for data science and machine learning')).toBeInTheDocument();
+    // Check reasons are displayed (may appear in both mobile and desktop versions)
+    expect(screen.getAllByText('Great for web development and has a huge ecosystem')).toHaveLength(2);
+    expect(screen.getAllByText('Excellent for data science and machine learning')).toHaveLength(2);
   });
 
   it('should format dates correctly', () => {
