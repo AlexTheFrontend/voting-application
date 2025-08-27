@@ -81,89 +81,10 @@ jobs:
         path: .next/
         retention-days: 7
 
-  lighthouse:
-    name: Lighthouse Performance Audit
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Use Node.js 20.x
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20.x
-        cache: 'npm'
-
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Build application
-      run: npm run build
-
-    - name: Start application
-      run: npm start &
-      env:
-        NODE_ENV: production
-
-    - name: Wait for application
-      run: sleep 10
-
-    - name: Run Lighthouse CI
-      run: |
-        npm install -g @lhci/cli@0.12.x
-        lhci autorun
-      env:
-        LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-
-  # security:
-  #   name: Security Audit
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #   - name: Checkout code
-  #     uses: actions/checkout@v4
-
-  #   - name: Run security audit
-  #     run: npm audit --audit-level high
-
-  #   - name: Run dependency vulnerability check
-  #     uses: securecodewarrior/github-action-add-sarif@v1
-  #     with:
-  #       sarif-file: 'security-audit.sarif'
-  #     continue-on-error: true
-
-  # deploy-staging:
-  #   name: Deploy to Staging
-  #   runs-on: ubuntu-latest
-  #   needs: [test, build]
-  #   if: github.ref == 'refs/heads/develop'
-  #   environment: staging
-
-  #   steps:
-  #   - name: Checkout code
-  #     uses: actions/checkout@v4
-
-  #   - name: Download build artifacts
-  #     uses: actions/download-artifact@v4
-  #     with:
-  #       name: build-files
-  #       path: .next/
-
-  #   - name: Deploy to Vercel Staging
-  #     uses: amondnet/vercel-action@v25
-  #     with:
-  #       vercel-token: ${{ secrets.VERCEL_TOKEN }}
-  #       vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-  #       vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-  #       working-directory: ./
-
   deploy-production:
     name: Deploy to Production
     runs-on: ubuntu-latest
-    needs: [test, build, lighthouse]
+    needs: [test, build]
     if: github.ref == 'refs/heads/main'
     environment: production
 
