@@ -31,9 +31,9 @@ jobs:
         VALIDATE_DOCKERFILE: true
         VALIDATE_CSS: true
         VALIDATE_HTML: true
-        JAVASCRIPT_ES_CONFIG_FILE: .eslintrc.json
-        TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.json
-        FILTER_REGEX_EXCLUDE: '.*\/node_modules\/.*|.*\/.next\/.*|.*\/coverage\/.*'
+        JAVASCRIPT_ES_CONFIG_FILE: eslint.config.mjs
+        TYPESCRIPT_ES_CONFIG_FILE: eslint.config.mjs
+        FILTER_REGEX_EXCLUDE: '.*\/node_modules\/.*|.*\/.next\/.*|.*\/coverage\/.*|.*\/out\/.*|.*\/build\/.*'
 
   test:
     name: Run Tests

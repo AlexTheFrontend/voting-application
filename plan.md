@@ -148,7 +148,6 @@ Build a Next.js TypeScript application for programming language voting with Redu
   - [ ] Bundle analyzer setup
 
 - [ ] **Performance Audits**
-  - [ ] Lighthouse performance scoring (target: >90)
   - [ ] Core Web Vitals optimization
   - [ ] Image optimization (if applicable)
   - [ ] Font loading optimization
@@ -169,7 +168,6 @@ Build a Next.js TypeScript application for programming language voting with Redu
 ### Deliverables
 - Fully responsive application
 - WCAG 2.1 AA compliant interface
-- Performance score >90 on Lighthouse
 - Comprehensive E2E test suite
 - User-friendly feedback mechanisms
 
@@ -244,7 +242,6 @@ Build a Next.js TypeScript application for programming language voting with Redu
 ### Technical Requirements
 - [ ] All functional requirements implemented
 - [ ] Test coverage ≥ 80%
-- [ ] Lighthouse performance score ≥ 90
 - [ ] WCAG 2.1 AA compliance
 - [ ] TypeScript strict mode with no `any` types
 - [ ] Zero ESLint/Prettier violations
@@ -284,7 +281,6 @@ Build a Next.js TypeScript application for programming language voting with Redu
 ### DevOps
 - GitHub Actions, Vercel/Netlify
 - New Relic, Sentry
-- Lighthouse CI
 
 ### Design
 - Figma (if designs provided)

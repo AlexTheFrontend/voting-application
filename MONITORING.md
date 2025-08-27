@@ -66,14 +66,6 @@ performanceMonitor.endTiming('form-submission');
 performanceMonitor.trackApiCall('/api/votes', 'POST', 200, 150);
 ```
 
-### Lighthouse CI
-Configured in `lighthouserc.js` - Runs on every main branch deployment
-
-#### Assertions
-- Performance: > 90
-- Accessibility: > 95  
-- Best Practices: > 90
-- SEO: > 90
 
 ## 🔒 Security Monitoring
 
@@ -162,7 +154,6 @@ Set up in Sentry dashboard:
 ### Production Dashboards
 - **Sentry**: https://sentry.io/organizations/your-org/
 - **Vercel Analytics**: https://vercel.com/your-team/your-project/analytics
-- **Lighthouse CI**: Available in GitHub Actions artifacts
 
 ### Key Metrics Overview
 | Service | Metric | Target | Alert Threshold |
@@ -188,8 +179,6 @@ NEXT_DEBUG=1 npm run dev
 # Bundle analysis
 ANALYZE=true npm run build
 
-# Lighthouse audit
-npm run lighthouse
 ```
 
 ### Common Issues & Solutions

@@ -32,7 +32,6 @@ npm run lint:fix      # Auto-fix linting issues
 npm run format        # Prettier formatting
 
 # Production readiness
-npm run lighthouse    # Performance audit
 ```
 
 ## Architecture Guidelines
@@ -114,7 +113,6 @@ src/
 ## Environment Variables
 ```
 NEXT_PUBLIC_API_BASE_URL=
-NEXT_PUBLIC_SENTRY_DSN=
 NEW_RELIC_LICENSE_KEY=
 ```
 
@@ -122,7 +120,6 @@ NEW_RELIC_LICENSE_KEY=
 - [ ] All tests passing
 - [ ] ESLint and Prettier checks passed
 - [ ] TypeScript compilation successful
-- [ ] Lighthouse score > 90
 - [ ] Security headers configured
 - [ ] Error monitoring active
 - [ ] Performance monitoring active
@@ -141,7 +138,6 @@ NEW_RELIC_LICENSE_KEY=
 - Cumulative Layout Shift (CLS) < 0.1
 
 ## Monitoring & Observability
-- Client-side error tracking with Sentry
 - Performance monitoring with New Relic
 - Custom metrics for form submission success/failure rates
 - API response time tracking

@@ -8,7 +8,6 @@ export const clientEnv = {
   APP_VERSION: process.env.NEXT_PUBLIC_APP_VERSION || 'development',
   APP_NAME: process.env.NEXT_PUBLIC_APP_NAME || 'Voting Application',
   API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || '/api',
-  SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN || '',
   
   // Feature flags
   ENABLE_ANALYTICS: process.env.NEXT_PUBLIC_ENABLE_ANALYTICS === 'true',
@@ -21,7 +20,6 @@ export const clientEnv = {
 export const serverEnv = {
   DATABASE_URL: process.env.DATABASE_URL || '',
   REDIS_URL: process.env.REDIS_URL || '',
-  SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN || '',
   NEW_RELIC_LICENSE_KEY: process.env.NEW_RELIC_LICENSE_KEY || '',
   
   // Email configuration
@@ -37,9 +35,6 @@ export function validateEnvironment() {
   
   // Production environment checks
   if (clientEnv.NODE_ENV === 'production') {
-    if (!clientEnv.SENTRY_DSN && clientEnv.ENABLE_ERROR_REPORTING) {
-      errors.push('NEXT_PUBLIC_SENTRY_DSN is required when error reporting is enabled in production');
-    }
     
     if (!serverEnv.NEW_RELIC_LICENSE_KEY && clientEnv.ENABLE_PERFORMANCE_MONITORING) {
       errors.push('NEW_RELIC_LICENSE_KEY is required when performance monitoring is enabled in production');
@@ -93,10 +88,6 @@ export const config = {
     baseUrl: clientEnv.API_BASE_URL,
   },
   monitoring: {
-    sentry: {
-      dsn: clientEnv.SENTRY_DSN,
-      enabled: clientEnv.ENABLE_ERROR_REPORTING,
-    },
     analytics: {
       enabled: clientEnv.ENABLE_ANALYTICS,
     },

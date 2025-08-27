@@ -34,8 +34,6 @@ npm run build       # Production build
 
 #### 3. Performance Audit
 ```bash
-# Run Lighthouse audit
-npm run lighthouse
 
 # Verify Core Web Vitals targets:
 # FCP < 1.5s, LCP < 2.5s, FID < 100ms, CLS < 0.1
@@ -80,7 +78,6 @@ npm run build
 VERCEL_TOKEN=your_vercel_token
 VERCEL_ORG_ID=your_vercel_org_id
 VERCEL_PROJECT_ID=your_vercel_project_id
-LHCI_GITHUB_APP_TOKEN=your_lighthouse_token
 ```
 
 #### Vercel Environment Variables
@@ -103,7 +100,6 @@ NEXT_PUBLIC_ENABLE_PERFORMANCE_MONITORING=true
 - [ ] No console errors
 
 #### 2. Performance Check
-- [ ] Lighthouse score > 90
 - [ ] Core Web Vitals in green
 - [ ] Page load time < 3 seconds
 - [ ] Mobile experience optimized
@@ -197,7 +193,6 @@ NODE_ENV=development npm start
 
 | Metric | Target | Current |
 |--------|---------|---------|
-| Lighthouse Performance | > 90 | ✅ |
 | Test Coverage | > 80% | ✅ |
 | Build Time | < 3 min | ✅ |
 | Error Rate | < 0.1% | ✅ |

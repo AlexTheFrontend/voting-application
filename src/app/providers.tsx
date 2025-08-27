@@ -3,7 +3,6 @@
 import { Provider } from 'react-redux';
 import { useEffect } from 'react';
 import { store } from '@/store';
-import { initSentry, withErrorBoundary } from '@/lib/sentry';
 import { initializeAnalytics } from '@/lib/analytics';
 import { validateEnvironment, isProduction } from '@/lib/env';
 
@@ -19,8 +18,6 @@ function ProvidersInner({ children }: ProvidersProps) {
         // Validate environment configuration
         validateEnvironment();
         
-        // Initialize error tracking
-        initSentry();
         
         // Initialize performance monitoring and analytics
         initializeAnalytics();
@@ -47,5 +44,4 @@ function ProvidersInner({ children }: ProvidersProps) {
   return <Provider store={store}>{children}</Provider>;
 }
 
-// Wrap the providers with error boundary
-export const Providers = withErrorBoundary(ProvidersInner);
+export const Providers = ProvidersInner;
